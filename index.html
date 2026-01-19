@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission Équilibre - Prévention PSPS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Écran d'accueil -->
+        <div id="welcome-screen" class="screen active">
+            <div class="welcome-container">
+                <div class="logo">
+                    <h1>🎯 MISSION ÉQUILIBRE</h1>
+                    <p class="tagline">Deviens explorateur de ton bien-être</p>
+                </div>
+                
+                <div class="welcome-content">
+                    <p class="intro">
+                        Découvre comment le sommeil, l'alimentation, les écrans et l'activité physique 
+                        influencent ton quotidien. Pas de leçons de morale, juste des découvertes 
+                        qui vont t'étonner !
+                    </p>
+                    
+                    <div class="modules-preview">
+                        <div class="module-card">
+                            <span class="module-icon">🌙</span>
+                            <h3>Chronos</h3>
+                            <p>Le maître du temps</p>
+                        </div>
+                        <div class="module-card">
+                            <span class="module-icon">🍎</span>
+                            <h3>Energia</h3>
+                            <p>Le carburant du corps</p>
+                        </div>
+                        <div class="module-card">
+                            <span class="module-icon">📱</span>
+                            <h3>Digital Balance</h3>
+                            <p>L'équilibre numérique</p>
+                        </div>
+                        <div class="module-card">
+                            <span class="module-icon">💪</span>
+                            <h3>Kinesis</h3>
+                            <p>Le mouvement créateur</p>
+                        </div>
+                    </div>
+                    
+                    <button class="btn-primary" onclick="app.startMission()">
+                        Commencer l'exploration
+                    </button>
+                    
+                    <button class="btn-secondary" onclick="app.showDataInfo()">
+                        📖 Comment fonctionnent mes données ?
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard principal -->
+        <div id="dashboard-screen" class="screen">
+            <header class="app-header">
+                <h2>🎒 Mon Carnet d'Explorateur</h2>
+                <div class="header-actions">
+                    <button class="btn-icon" onclick="app.showSettings()" title="Paramètres">⚙️</button>
+                    <button class="btn-icon" onclick="app.exportPDF()" title="Télécharger mon bilan">📄</button>
+                </div>
+            </header>
+
+            <div class="dashboard-content">
+                <!-- Vue d'ensemble -->
+                <section class="overview-section">
+                    <h3>📊 Ma Progression</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="modules-completed">0/4</div>
+                            <div class="stat-label">Modules explorés</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="challenges-completed">0/20</div>
+                            <div class="stat-label">Défis relevés</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="badges-earned">0</div>
+                            <div class="stat-label">Badges débloqués</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="exploration-time">0h</div>
+                            <div class="stat-label">Temps d'exploration</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Modules -->
+                <section class="modules-section">
+                    <h3>🗺️ Mes Modules</h3>
+                    <div class="modules-grid">
+                        <!-- Module Sommeil -->
+                        <div class="module-card-big" data-module="sleep">
+                            <div class="module-header" style="background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);">
+                                <span class="module-icon-big">🌙</span>
+                                <div class="module-title">
+                                    <h4>Chronos</h4>
+                                    <p>Le maître du temps</p>
+                                </div>
+                            </div>
+                            <div class="module-body">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="progress-sleep" style="width: 0%"></div>
+                                </div>
+                                <p class="module-desc">Découvre les secrets du sommeil et son impact sur ta vie quotidienne</p>
+                                <div class="module-stats">
+                                    <span>🎯 <span id="challenges-sleep">0</span>/5 défis</span>
+                                    <span>🏆 <span id="badges-sleep">0</span> badges</span>
+                                </div>
+                                <button class="btn-module" onclick="app.openModule('sleep')">
+                                    Explorer →
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Module Alimentation -->
+                        <div class="module-card-big" data-module="nutrition">
+                            <div class="module-header" style="background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);">
+                                <span class="module-icon-big">🍎</span>
+                                <div class="module-title">
+                                    <h4>Energia</h4>
+                                    <p>Le carburant du corps</p>
+                                </div>
+                            </div>
+                            <div class="module-body">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="progress-nutrition" style="width: 0%"></div>
+                                </div>
+                                <p class="module-desc">Comprends comment ton alimentation influence ton énergie et ta concentration</p>
+                                <div class="module-stats">
+                                    <span>🎯 <span id="challenges-nutrition">0</span>/5 défis</span>
+                                    <span>🏆 <span id="badges-nutrition">0</span> badges</span>
+                                </div>
+                                <button class="btn-module" onclick="app.openModule('nutrition')">
+                                    Explorer →
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Module Écrans -->
+                        <div class="module-card-big" data-module="screens">
+                            <div class="module-header" style="background: linear-gradient(135deg, #e67e22 0%, #f39c12 100%);">
+                                <span class="module-icon-big">📱</span>
+                                <div class="module-title">
+                                    <h4>Digital Balance</h4>
+                                    <p>L'équilibre numérique</p>
+                                </div>
+                            </div>
+                            <div class="module-body">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="progress-screens" style="width: 0%"></div>
+                                </div>
+                                <p class="module-desc">Explore ta relation aux écrans et découvre l'équilibre digital</p>
+                                <div class="module-stats">
+                                    <span>🎯 <span id="challenges-screens">0</span>/5 défis</span>
+                                    <span>🏆 <span id="badges-screens">0</span> badges</span>
+                                </div>
+                                <button class="btn-module" onclick="app.openModule('screens')">
+                                    Explorer →
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Module Sport -->
+                        <div class="module-card-big" data-module="sport">
+                            <div class="module-header" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                                <span class="module-icon-big">💪</span>
+                                <div class="module-title">
+                                    <h4>Kinesis</h4>
+                                    <p>Le mouvement créateur</p>
+                                </div>
+                            </div>
+                            <div class="module-body">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="progress-sport" style="width: 0%"></div>
+                                </div>
+                                <p class="module-desc">Découvre les bienfaits du mouvement sur ton corps et ton esprit</p>
+                                <div class="module-stats">
+                                    <span>🎯 <span id="challenges-sport">0</span>/5 défis</span>
+                                    <span>🏆 <span id="badges-sport">0</span> badges</span>
+                                </div>
+                                <button class="btn-module" onclick="app.openModule('sport')">
+                                    Explorer →
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Mes badges -->
+                <section class="badges-section">
+                    <h3>🏆 Mes Badges</h3>
+                    <div id="badges-container" class="badges-grid">
+                        <!-- Badges générés dynamiquement -->
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Écran Module (template réutilisable) -->
+        <div id="module-screen" class="screen">
+            <header class="module-header-bar">
+                <button class="btn-back" onclick="app.backToDashboard()">← Retour</button>
+                <h2 id="module-title">Module</h2>
+                <div class="module-progress-header">
+                    <span id="module-progress-text">0/5</span>
+                </div>
+            </header>
+
+            <div id="module-content" class="module-content">
+                <!-- Contenu dynamique selon le module -->
+            </div>
+        </div>
+
+        <!-- Modal d'information sur les données -->
+        <div id="data-info-modal" class="modal">
+            <div class="modal-content">
+                <span class="modal-close" onclick="app.closeModal('data-info-modal')">&times;</span>
+                <h2>🔒 Tes données sont privées</h2>
+                <div class="modal-body">
+                    <p><strong>Où sont stockées mes données ?</strong></p>
+                    <p>Toutes tes découvertes, tes progrès et tes notes sont sauvegardés uniquement sur ton appareil (dans ton navigateur). Personne d'autre ne peut les voir.</p>
+                    
+                    <p><strong>Qui peut voir mes réponses ?</strong></p>
+                    <p>Personne ! Ni tes profs, ni l'école, ni personne d'autre. C'est TON espace personnel d'exploration.</p>
+                    
+                    <p><strong>Comment sauvegarder mon travail ?</strong></p>
+                    <p>Ton travail est sauvegardé automatiquement. Tu peux aussi télécharger ton carnet pour le garder ou le transférer sur un autre appareil.</p>
+                    
+                    <p><strong>Puis-je tout effacer ?</strong></p>
+                    <p>Oui, à tout moment dans les paramètres. C'est toi qui décides.</p>
+                    
+                    <div class="info-box">
+                        <strong>💡 Important :</strong> Cette plateforme est là pour T'AIDER à mieux te connaître, pas pour te juger ou te surveiller.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Paramètres -->
+        <div id="settings-modal" class="modal">
+            <div class="modal-content">
+                <span class="modal-close" onclick="app.closeModal('settings-modal')">&times;</span>
+                <h2>⚙️ Paramètres</h2>
+                <div class="modal-body">
+                    <div class="settings-section">
+                        <h3>💾 Sauvegarde</h3>
+                        <button class="btn-secondary" onclick="app.exportData()">
+                            📥 Télécharger mon carnet
+                        </button>
+                        <button class="btn-secondary" onclick="app.importData()">
+                            📤 Restaurer mon carnet
+                        </button>
+                        <input type="file" id="import-file" accept=".json" style="display: none;" onchange="app.handleImport(event)">
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h3>📊 Mes données</h3>
+                        <p>Dernière sauvegarde : <span id="last-save-time">Jamais</span></p>
+                        <p>Modules explorés : <span id="settings-modules">0/4</span></p>
+                    </div>
+                    
+                    <div class="settings-section danger-zone">
+                        <h3>⚠️ Zone dangereuse</h3>
+                        <button class="btn-danger" onclick="app.confirmReset()">
+                            🗑️ Effacer toutes mes données
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de confirmation -->
+        <div id="confirm-modal" class="modal">
+            <div class="modal-content modal-small">
+                <h2 id="confirm-title">Confirmation</h2>
+                <p id="confirm-message">Êtes-vous sûr ?</p>
+                <div class="modal-actions">
+                    <button class="btn-secondary" onclick="app.closeModal('confirm-modal')">Annuler</button>
+                    <button class="btn-danger" id="confirm-action-btn">Confirmer</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification toast -->
+        <div id="notification" class="notification">
+            <span id="notification-text"></span>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="storage.js"></script>
+    <script src="modules/sleep.js"></script>
+    <script src="modules/nutrition.js"></script>
+    <script src="modules/screens.js"></script>
+    <script src="modules/sport.js"></script>
+    <script src="pdf-generator.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
